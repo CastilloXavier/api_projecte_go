@@ -17,8 +17,8 @@ import (
 
 type createRequest struct {
 	ID		 string	`json:"id" binding:"required"`
-	Name	 string	`json:"id" binding:"required"`
-	Duration string	`json:"id" binding:"required"`
+	Name	 string	`json:"name" binding:"required"`
+	Duration string	`json:"duration" binding:"required"`
 }
 
 func CreateHandler(courseRepository mooc.CourseRepository) gin.HandlerFunc{
@@ -29,27 +29,16 @@ func CreateHandler(courseRepository mooc.CourseRepository) gin.HandlerFunc{
 			return
 		}
 
-		course := mooc.NewCourse(req.ID, req.Name, req.Duration)
-		if err := courseRepository.Save(ctx, course); err != nil {
+		course, err := mooc.NewCourse(req.ID, req.Name, req.Duration)
+		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err.Error())
 			return
 		}
 
-		//course := mooc.NewCourse(req.ID, req.Name, req.Duration)
-
-		//mysqlURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
-		//db, err := sql.Open("mysql", mysqlURI)
-		//if err != nil {
-		//	ctx.JSON(http.StatusInternalServerError, err.Error())
-		//	return
-		//}
-
-		//courseRepository := mysql.NewCourseRepositroy(db)
-
-		//if err := courseRepository.Save(ctx, course); err != nil {
-		//	ctx.JSON(http.StatusInternalServerError, err.Error())
-		//	return
-		//}
+		if err := courseRepository.Save(ctx, course); err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
 
 		ctx.Status(http.StatusCreated)
 	}
