@@ -1,6 +1,8 @@
 package server
 
 import (
+	mooc "api_project/internal"
+	"api_project/internal/platform/server/handler/courses"
 	"api_project/internal/platform/server/handler/health"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -10,9 +12,12 @@ import (
 type Server struct {
 	httpAddr string
 	engine 	*gin.Engine
+
+	courseRepository mooc.CourseRepository
 }
 
-func New(host string, port uint) Server {
+
+func New(host string, port uint, courseRepository mooc.CourseRepository) Server {
 	srv := Server{
 		engine: gin.New(),
 		httpAddr: fmt.Sprintf("%s:%d", host, port),
@@ -28,4 +33,5 @@ func (s *Server) Run() error {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.CheckHandler())
+	s.engine.POST("/courses", courses.CreateHandler(s.courseRepository))
 }
