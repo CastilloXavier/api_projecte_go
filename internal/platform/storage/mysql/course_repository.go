@@ -1,10 +1,10 @@
 package mysql
 
 import (
+	mooc "api_project/internal"
 	"context"
 	"database/sql"
 	"fmt"
-	mooc "api_project/internal"
 	"github.com/huandu/go-sqlbuilder"
 )
 
@@ -21,9 +21,9 @@ func NewCourseRepositroy(db *sql.DB) *CourseRepository {
 func (r *CourseRepository) Save(ctx context.Context, course mooc.Course) error {
 	courseSQLStruct := sqlbuilder.NewStruct(new(sqlCourse))
 	query, args := courseSQLStruct.InsertInto(sqlCourseTable, sqlCourse{
-		ID: course.ID(),
-		Name:  course.Name(),
-		Duration:  course.Duration(),
+		ID: course.ID().String(),
+		Name:  course.Name().String(),
+		Duration:  course.Duration().String(),
 	}).Build()
 
 	_, err := r.db.ExecContext(ctx, query, args...)
