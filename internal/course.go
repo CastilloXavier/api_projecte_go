@@ -81,6 +81,29 @@ type Course struct {
 	duration CourseDuration
 }
 
+func NewCourse(id, name, duration string) (Course, error) {
+	idVO, err := NewCourseID(id)
+	if err != nil {
+		return Course{}, err
+	}
+
+	nameVO, err := NewCourseName(name)
+	if err != nil {
+		return Course{}, err
+	}
+
+	durationVO, err := NewCourseDuration(duration)
+	if err != nil {
+		return Course{}, err
+	}
+
+	return  Course{
+		id: idVO,
+		name: nameVO,
+		duration: durationVO,
+	}, nil
+}
+
 // ID returns the course unique identifier.
 func (c Course) ID() CourseID {
 	return c.id
