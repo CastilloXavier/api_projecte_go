@@ -21,6 +21,8 @@ func New(host string, port uint, courseRepository mooc.CourseRepository) Server 
 	srv := Server{
 		engine: gin.New(),
 		httpAddr: fmt.Sprintf("%s:%d", host, port),
+
+		courseRepository: courseRepository,
 	}
 	srv.registerRoutes()
 	return srv
