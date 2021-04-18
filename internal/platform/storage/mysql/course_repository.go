@@ -1,10 +1,12 @@
 package mysql
 
 import (
-	mooc "api_project/internal"
+
 	"context"
 	"database/sql"
 	"fmt"
+
+	mooc "api_project/internal"
 	"github.com/huandu/go-sqlbuilder"
 )
 
@@ -12,7 +14,7 @@ type CourseRepository struct {
 	db *sql.DB
 }
 
-func NewCourseRepositroy(db *sql.DB) *CourseRepository {
+func NewCourseRepository(db *sql.DB) *CourseRepository {
 	return &CourseRepository{
 		db: db,
 	}
@@ -23,7 +25,6 @@ func (r *CourseRepository) Save(ctx context.Context, course mooc.Course) error {
 	query, args := courseSQLStruct.InsertInto(sqlCourseTable, sqlCourse{
 		ID: course.ID().String(),
 		Name:  course.Name().String(),
-		Duration:  course.Duration().String(),
 	}).Build()
 
 	_, err := r.db.ExecContext(ctx, query, args...)
