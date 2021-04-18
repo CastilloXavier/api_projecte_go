@@ -7,14 +7,6 @@ import (
 )
 
 
-/*const (
-	dbUser = "root"
-	dbPass = "gs3458"
-	dbHost = "localhost"
-	dbPort = "3306"
-	dbName = "codely"
-)*/
-
 type createRequest struct {
 	ID		 string	`json:"id" binding:"required"`
 	Name	 string	`json:"name" binding:"required"`
