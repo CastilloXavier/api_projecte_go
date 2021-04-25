@@ -1,6 +1,8 @@
 package bootstrap
 
 import (
+	"api_project/internal/creating"
+	"api_project/internal/platform/bus/inmemory"
 	"api_project/internal/platform/server"
 	"api_project/internal/platform/storage/mysql"
 	"database/sql"
@@ -12,7 +14,7 @@ const (
 	port = 8080
 
 	dbUser = "root"
-	dbPass = "gs3458"
+	dbPass = "Gs4569"
 	dbHost = "localhost"
 	dbPort = "3306"
 	dbName = "codely"
@@ -23,9 +25,15 @@ func Run() error{
 	if err != nil {
 		return err
 	}
+	var (
+		commandBus = inmemory.NewCommandBus()
+	)
 
-	courseRepository := mysql.NewCourseRepositroy(db)
+	courseRepository := mysql.NewCourseRepository(db)
 
-	srv := server.New(host, port, courseRepository)
+	createCourseCommandHandler := creating.NewCourseCommandHandler(courseRepository)
+	commandBus.Register(creating.CourseCommandType, createCourseCommandHandler)
+
+	srv := server.New(host, port, creatingCoursesService)
 	return srv.Run()
 }

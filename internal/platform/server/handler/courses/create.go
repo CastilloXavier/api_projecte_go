@@ -1,7 +1,10 @@
 package courses
 
 import (
+	"api_project/cmd/kit/command"
 	mooc "api_project/internal"
+	"api_project/internal/creating"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,7 +16,7 @@ type createRequest struct {
 	Duration string	`json:"duration" binding:"required"`
 }
 
-func CreateHandler(courseRepository mooc.CourseRepository) gin.HandlerFunc{
+func CreateHandler(commandBus command.Bus) gin.HandlerFunc{
 	return func(ctx *gin.Context) {
 		var req createRequest
 		if err := ctx.BindJSON(&req); err != nil {
@@ -21,15 +24,23 @@ func CreateHandler(courseRepository mooc.CourseRepository) gin.HandlerFunc{
 			return
 		}
 
-		course, err := mooc.NewCourse(req.ID, req.Name, req.Duration)
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return
-		}
+		err := commandBus.Dispatch(ctx, creating.NewCourseCommand(
+			req.ID,
+			req.Name,
+			req.Duration,
+		))
+		//err := creatingCourseService.CreateCourse(ctx, req.ID, req.Name, req.Duration)
 
-		if err := courseRepository.Save(ctx, course); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return
+		if err != nil {
+			switch {
+			case errors.Is(err, mooc.ErrInvalidCourseID),
+				errors.Is(err, mooc.ErrEmptyCourseName), errors.Is(err, mooc.ErrInvalidCourseID):
+				ctx.JSON(http.StatusBadRequest, err.Error())
+				return
+			default:
+				ctx.JSON(http.StatusInternalServerError, err.Error())
+				return
+			}
 		}
 
 		ctx.Status(http.StatusCreated)

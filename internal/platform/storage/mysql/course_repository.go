@@ -25,6 +25,7 @@ func (r *CourseRepository) Save(ctx context.Context, course mooc.Course) error {
 	query, args := courseSQLStruct.InsertInto(sqlCourseTable, sqlCourse{
 		ID: course.ID().String(),
 		Name:  course.Name().String(),
+		Duration: course.Duration().String(),
 	}).Build()
 
 	_, err := r.db.ExecContext(ctx, query, args...)

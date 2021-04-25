@@ -1,7 +1,7 @@
 package courses
 
 import (
-	"api_project/internal/platform/storage/storagemocks"
+	"api_project/cmd/kit/command/commandmocks"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
@@ -14,12 +14,20 @@ import (
 )
 
 func TestHandler_Create(t *testing.T) {
-	courseRepository := new(storagemocks.CourseRepository)
-	courseRepository.On("Save", mock.Anything, mock.AnythingOfType("mooc.Course")).Return(nil)
+	//repositoryMock := new(storagemocks.CourseRepository)
+	//repositoryMock.On("Save", mock.Anything, mock.AnythingOfType("mooc.Course")).Return(nil)
+	commandBus := new(commandmocks.Bus)
+	commandBus.On(
+		"Dispatch",
+		mock.Anything,
+		mock.AnythingOfType("creating.CourseCommand"),
+		).Return(nil)
+
+	//createCourseSrv := creating.NewCourseService(repositoryMock)
 
 	gin.SetMode(gin.TestMode)
 	r := gin.New()
-	r.POST("/courses", CreateHandler(courseRepository))
+	r.POST("/courses", CreateHandler(commandBus))
 
 	t.Run("given an invalid request it returns 400", func(t *testing.T) {
 		createCourseReq := createRequest{
