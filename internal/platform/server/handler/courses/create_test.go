@@ -1,7 +1,7 @@
 package courses
 
 import (
-	"api_project/cmd/kit/command/commandmocks"
+	"api_project/kit/command/commandmocks"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"

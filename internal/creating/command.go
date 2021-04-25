@@ -1,7 +1,7 @@
 package creating
 
 import (
-	"api_project/cmd/kit/command"
+	"api_project/kit/command"
 	"context"
 	"errors"
 )

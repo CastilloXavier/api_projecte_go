@@ -3,7 +3,7 @@
 package commandmocks
 
 import (
-	command "api_project/cmd/kit/command"
+	command "api_project/kit/command"
 	context "context"
 
 	mock "github.com/stretchr/testify/mock"

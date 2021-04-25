@@ -1,9 +1,9 @@
 package courses
 
 import (
-	"api_project/cmd/kit/command"
 	mooc "api_project/internal"
 	"api_project/internal/creating"
+	"api_project/kit/command"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
