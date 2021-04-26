@@ -1,8 +1,8 @@
 package inmemory
 
 import (
+	"api_project/kit/command"
 	"context"
-	"github.com/CodelyTV/go-hexagonal_http_api-course/05-02-timeouts/kit/command"
 	"log"
 )
 
