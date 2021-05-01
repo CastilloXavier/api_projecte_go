@@ -39,6 +39,6 @@ func Run() error{
 	createCourseCommandHandler := creating.NewCourseCommandHandler(creatingCourseService)
 	commandBus.Register(creating.CourseCommandType, createCourseCommandHandler)
 
-	ctx, srv := server.New(context.Background(),host, port, shutdownTimeout, commandBus)
+	ctx, srv := server.New(context.Background(), host, port, shutdownTimeout, commandBus)
 	return srv.Run(ctx)
 }

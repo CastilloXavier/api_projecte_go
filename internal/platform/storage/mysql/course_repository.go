@@ -5,6 +5,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"time"
 
 	mooc "api_project/internal"
 	"github.com/huandu/go-sqlbuilder"
@@ -12,11 +13,13 @@ import (
 
 type CourseRepository struct {
 	db *sql.DB
+	dbTimeout time.Duration
 }
 
-func NewCourseRepository(db *sql.DB) *CourseRepository {
+func NewCourseRepository(db *sql.DB, dbTimeout time.Duration) *CourseRepository {
 	return &CourseRepository{
 		db: db,
+		dbTimeout: dbTimeout,
 	}
 }
 
