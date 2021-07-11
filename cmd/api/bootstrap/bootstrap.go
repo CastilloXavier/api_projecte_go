@@ -1,7 +1,9 @@
 package bootstrap
 
 import (
+	mooc "api_project/internal"
 	"api_project/internal/creating"
+	"api_project/internal/increasing"
 	"api_project/internal/platform/bus/inmemory"
 	"api_project/internal/platform/server"
 	"api_project/internal/platform/storage/mysql"
@@ -32,14 +34,22 @@ func Run() error {
 	}
 	var (
 		commandBus = inmemory.NewCommandBus()
+		eventBus = inmemory.NewEventBus()
 	)
 
 	courseRepository := mysql.NewCourseRepository(db, dbTimeout)
 
-	creatingCourseService := creating.NewCourseService(courseRepository)
+	creatingCourseService := creating.NewCourseService(courseRepository, eventBus)
+	increasingCourseCounterService := increasing.NewCourseCounterService()
 
 	createCourseCommandHandler := creating.NewCourseCommandHandler(creatingCourseService)
 	commandBus.Register(creating.CourseCommandType, createCourseCommandHandler)
+
+	eventBus.Subscribe(
+		mooc.CourseCreatedEventType,
+		creating.NewIncreaseCoursesCounterOnCourseCreated(increasingCourseCounterService),
+	)
+
 
 	ctx, srv := server.New(context.Background(), host, port, shutdownTimeout, commandBus)
 	return srv.Run(ctx)

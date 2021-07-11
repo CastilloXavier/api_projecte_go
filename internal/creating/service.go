@@ -2,16 +2,19 @@ package creating
 
 import (
 	mooc "api_project/internal"
+	event "api_project/kit/event"
 	"context"
 )
 
 type CourseService struct {
 	courseRepository mooc.CourseRepository
+	eventBus		event.Bus
 }
 
-func NewCourseService(courseRepository mooc.CourseRepository) CourseService {
+func NewCourseService(courseRepository mooc.CourseRepository, eventBus event.Bus) CourseService {
 	return CourseService{
 		courseRepository: courseRepository,
+		eventBus: 		  eventBus,
 	}
 }
 
@@ -20,5 +23,10 @@ func (s CourseService) CreateCourse(ctx context.Context, id, name, duration stri
 	if err != nil {
 		return err
 	}
-	return s.courseRepository.Save(ctx, course)
+
+	if err := s.courseRepository.Save(ctx, course); err != nil {
+		return err
+	}
+
+	return s.eventBus.Publish(ctx, course.PullEvents())
 }

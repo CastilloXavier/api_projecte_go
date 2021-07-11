@@ -1,6 +1,7 @@
 package mooc
 
 import (
+	event "api_project/kit/event"
 	"context"
 	"errors"
 	"fmt"
@@ -68,18 +69,21 @@ func (duration CourseDuration) String() string {
 	return duration.value
 }
 
+// Course is the data structure that represents a course.
+type Course struct {
+	id       CourseID
+	name     CourseName
+	duration CourseDuration
+
+	events []event.Event
+}
+
 // CourseRepository defines the expected behaviour from a course storage.
 type CourseRepository interface {
 	Save(ctx context.Context, course Course) error
 }
 
 //go:generate mockery --case=snake --outpkg=storagemocks --output=platform/storage/storagemocks --name=CourseRepository
-// Course is the data structure that represents a course.
-type Course struct {
-	id       CourseID
-	name     CourseName
-	duration CourseDuration
-}
 
 func NewCourse(id, name, duration string) (Course, error) {
 	idVO, err := NewCourseID(id)
@@ -117,4 +121,17 @@ func (c Course) Name() CourseName {
 // Duration returns the course duration.
 func (c Course) Duration() CourseDuration {
 	return c.duration
+}
+
+// Record records a new domain event.
+func (c *Course) Record(evt event.Event) {
+	c.events = append(c.events, evt)
+}
+
+// PullEvents returns all the recorded domain events.
+func (c Course) PullEvents() []event.Event {
+	evt := c.events
+	c.events = []event.Event{}
+
+	return evt
 }

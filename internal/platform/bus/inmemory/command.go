@@ -3,7 +3,6 @@ package inmemory
 import (
 	"api_project/kit/command"
 	"context"
-	"log"
 )
 
 // CommandBus is an in-memory implemention of the command.Bus
@@ -24,15 +23,7 @@ func (b* CommandBus) Dispatch(ctx context.Context, cmd command.Command) error {
 	if !ok {
 		return nil
 	}
-
-	go func() {
-		err := handler.Handle(ctx, cmd)
-		if err != nil {
-			log.Printf("Error while handling %s - %s\n", cmd.Type(), err)
-		}
-	}()
-
-	return nil
+	return handler.Handle(ctx, cmd)
 }
 
 // Register implements the command.Bus interface
