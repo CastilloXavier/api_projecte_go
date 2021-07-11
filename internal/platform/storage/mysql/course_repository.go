@@ -31,7 +31,10 @@ func (r *CourseRepository) Save(ctx context.Context, course mooc.Course) error {
 		Duration: course.Duration().String(),
 	}).Build()
 
-	_, err := r.db.ExecContext(ctx, query, args...)
+	ctxTimeout, cancel := context.WithTimeout(ctx, r.dbTimeout)
+	defer cancel()
+
+	_, err := r.db.ExecContext(ctxTimeout, query, args...)
 	if err != nil {
 		return fmt.Errorf("error tying to persit course on database: %v", err)
 	}

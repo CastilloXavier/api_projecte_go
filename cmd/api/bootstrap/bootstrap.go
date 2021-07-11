@@ -12,17 +12,19 @@ import (
 )
 
 const (
-	host = "localhost"
-	port = 8080
+	host            = "localhost"
+	port            = 8080
 	shutdownTimeout = 10 * time.Second
 
-	dbUser = "root"
-	dbPass = "Gs4569"
-	dbHost = "localhost"
-	dbPort = "3306"
-	dbName = "codely"
+	dbUser    = "root"
+	dbPass    = "Gs4569"
+	dbHost    = "localhost"
+	dbPort    = "3306"
+	dbName    = "codely"
+	dbTimeout = 5 * time.Second
 )
-func Run() error{
+
+func Run() error {
 	mysqlURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 	db, err := sql.Open("mysql", mysqlURI)
 	if err != nil {
@@ -32,7 +34,7 @@ func Run() error{
 		commandBus = inmemory.NewCommandBus()
 	)
 
-	courseRepository := mysql.NewCourseRepository(db)
+	courseRepository := mysql.NewCourseRepository(db, dbTimeout)
 
 	creatingCourseService := creating.NewCourseService(courseRepository)
 
