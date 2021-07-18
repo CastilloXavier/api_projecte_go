@@ -3,7 +3,7 @@
 package storagemocks
 
 import (
-	mooc2 "api_project/API/internal"
+	mooc2 "github.com/CastilloXavier/api_project_go/API/internal"
 	context "context"
 
 	mock "github.com/stretchr/testify/mock"

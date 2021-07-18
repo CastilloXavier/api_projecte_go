@@ -1,12 +1,12 @@
 package bootstrap
 
 import (
-	mooc2 "api_project/API/internal"
-	creating2 "api_project/API/internal/creating"
-	increasing2 "api_project/API/internal/increasing"
-	inmemory2 "api_project/API/internal/platform/bus/inmemory"
-	server2 "api_project/API/internal/platform/server"
-	mysql2 "api_project/API/internal/platform/storage/mysql"
+	mooc2 "github.com/CastilloXavier/api_project_go/API/internal"
+	creating2 "github.com/CastilloXavier/api_project_go/API/internal/creating"
+	increasing2 "github.com/CastilloXavier/api_project_go/API/internal/increasing"
+	inmemory2 "github.com/CastilloXavier/api_project_go/API/internal/platform/bus/inmemory"
+	server2 "github.com/CastilloXavier/api_project_go/API/internal/platform/server"
+	mysql2 "github.com/CastilloXavier/api_project_go/API/internal/platform/storage/mysql"
 	"context"
 	"database/sql"
 	"fmt"

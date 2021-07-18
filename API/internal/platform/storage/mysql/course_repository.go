@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	mooc2 "api_project/API/internal"
+	mooc2 "github.com/CastilloXavier/api_project_go/API/internal"
 	"context"
 	"database/sql"
 	"fmt"

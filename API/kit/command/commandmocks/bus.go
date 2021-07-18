@@ -3,8 +3,8 @@
 package commandmocks
 
 import (
-	command2 "api_project/API/kit/command"
 	context "context"
+	command2 "github.com/CastilloXavier/api_project_go/API/kit/command"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -29,6 +29,6 @@ func (_m *Bus) Dispatch(_a0 context.Context, _a1 command2.Command) error {
 }
 
 // Register provides a mock function with given fields: _a0, _a1
-func (_m *Bus) Register(_a0 eventmocks.Type, _a1 command2.Handler) {
+func (_m *Bus) Register(_a0 command2.Type, _a1 command2.Handler) {
 	_m.Called(_a0, _a1)
 }

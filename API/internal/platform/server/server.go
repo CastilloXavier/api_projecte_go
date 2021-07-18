@@ -1,9 +1,9 @@
 package server
 
 import (
-	courses2 "api_project/API/internal/platform/server/handler/courses"
-	health2 "api_project/API/internal/platform/server/handler/health"
-	command2 "api_project/API/kit/command"
+	courses2 "github.com/CastilloXavier/api_project_go/API/internal/platform/server/handler/courses"
+	health2 "github.com/CastilloXavier/api_project_go/API/internal/platform/server/handler/health"
+	command2 "github.com/CastilloXavier/api_project_go/API/kit/command"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"

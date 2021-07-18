@@ -1,7 +1,7 @@
 package creating
 
 import (
-	command2 "api_project/API/kit/command"
+	command2 "github.com/api_project_go/API/kit/command"
 	"context"
 	"errors"
 )

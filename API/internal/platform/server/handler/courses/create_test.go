@@ -1,7 +1,7 @@
 package courses
 
 import (
-	commandmocks2 "api_project/API/kit/command/commandmocks"
+	commandmocks2 "github.com/CastilloXavier/api_project_go/API/kit/command/commandmocks"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"

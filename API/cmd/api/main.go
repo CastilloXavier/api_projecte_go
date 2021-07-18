@@ -1,7 +1,7 @@
 package api
 
 import (
-	bootstrap2 "api_project/API/cmd/api/bootstrap"
+	bootstrap2 "github.com/CastilloXavier/api_project_go/API/cmd/api/bootstrap"
 	"log"
 )
 

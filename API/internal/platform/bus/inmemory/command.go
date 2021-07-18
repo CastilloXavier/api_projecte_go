@@ -1,7 +1,7 @@
 package inmemory
 
 import (
-	command2 "api_project/API/kit/command"
+	command2 "github.com/CastilloXavier/api_project_go/API/kit/command"
 	"context"
 )
 

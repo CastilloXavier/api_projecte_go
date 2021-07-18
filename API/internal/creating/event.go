@@ -1,9 +1,9 @@
 package creating
 
 import (
-	mooc2 "api_project/API/internal"
-	increasing2 "api_project/API/internal/increasing"
-	event2 "api_project/API/kit/event"
+	mooc2 "api_project_go/API/internal"
+	increasing2 "api_project_go/API/internal/increasing"
+	event2 "api_project_go/API/kit/event"
 	"context"
 	"errors"
 )

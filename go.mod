@@ -1,4 +1,4 @@
-module github.com/api_project
+module github.com/CastilloXavier/api_project_go
 
 go 1.16
 

@@ -1,7 +1,7 @@
 package mooc
 
 import (
-	event2 "api_project/API/kit/event"
+	event2 "github.com/CastilloXavier/api_project_go/API/kit/event"
 	"context"
 	"errors"
 	"fmt"

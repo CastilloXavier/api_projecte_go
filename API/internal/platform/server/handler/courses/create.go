@@ -1,9 +1,9 @@
 package courses
 
 import (
-	mooc2 "api_project/API/internal"
-	creating2 "api_project/API/internal/creating"
-	command2 "api_project/API/kit/command"
+	mooc2 "github.com/CastilloXavier/api_project_go/API/internal"
+	creating2 "github.com/CastilloXavier/api_project_go/API/internal/creating"
+	command2 "github.com/CastilloXavier/api_project_go/API/kit/command"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
